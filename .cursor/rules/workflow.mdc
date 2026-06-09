@@ -1,0 +1,28 @@
+---
+description: Development workflow — plan before code
+alwaysApply: true
+---
+
+# Workflow
+
+Every task follows this order. **Do not write code or make changes until the user approves the plan.**
+
+## Steps
+
+1. **User assigns a task** — one plan item or narrow step (e.g. a single Phase 0 checkbox).
+2. **Agent describes the approach** — what will be done, which files affected, expected outcome.
+3. **Agent asks questions** — if anything is unclear, ambiguous, or has trade-offs.
+4. **User approves** — explicit go-ahead to implement.
+5. **Agent implements** — narrow scope, one logical change, matching `commits.mdc`.
+
+## Rules
+
+- Never skip steps 2–4 and jump straight to implementation.
+- One task at a time; align with `PROJECT.md` plan order unless user says otherwise.
+- After implementation, briefly report what was done; wait for next task assignment.
+
+## Commands
+
+- The **user runs all project commands** (composer, sail, artisan, npm, pest, duster, git, etc.).
+- The agent **only specifies** which command to run and what to expect.
+- The agent **must not** execute artisan, tests, composer, sail, or other shell commands unless the user **explicitly asks** (e.g. "run the tests", "execute this command").
