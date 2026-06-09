@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Catalog\Http\Controllers\CatalogController;
+use Modules\Catalog\Http\Controllers\ProductController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('catalogs', CatalogController::class)->names('catalog');
-});
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
