@@ -2,7 +2,9 @@
 
 namespace Modules\Catalog\Providers;
 
+use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
+use Modules\Catalog\Filament\Resources\CategoryResource;
 use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class CatalogServiceProvider extends ModuleServiceProvider
@@ -33,6 +35,21 @@ class CatalogServiceProvider extends ModuleServiceProvider
         EventServiceProvider::class,
         RouteServiceProvider::class,
     ];
+
+    public function register(): void
+    {
+        parent::register();
+
+        Panel::configureUsing(function (Panel $panel): void {
+            if ($panel->getId() !== 'admin') {
+                return;
+            }
+
+            $panel->resources([
+                CategoryResource::class,
+            ]);
+        });
+    }
 
     /**
      * Define module schedules.
