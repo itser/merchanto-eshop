@@ -6,7 +6,7 @@ SAIL := ./vendor/bin/sail
 	up down restart ps shell logs \
 	artisan composer migrate fresh db-show \
 	test test-catalog test-order pest \
-	pint duster stan check \
+	pint duster duster-fix stan check \
 	npm npm-dev build
 
 # ------------------------------------------------------------------------------
@@ -75,8 +75,11 @@ pest: ## Run Pest directly
 pint: ## Fix code style (Laravel Pint)
 	$(SAIL) bin pint
 
-duster: ## Lint and fix code style (Laravel Duster)
+duster: ## Lint code style (Laravel Duster)
 	$(SAIL) php vendor/bin/duster lint
+
+duster-fix: ## Fix code style (Laravel Duster)
+	$(SAIL) php vendor/bin/duster fix
 
 stan: ## Run static analysis (Larastan)
 	$(SAIL) php vendor/bin/phpstan analyse
