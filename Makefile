@@ -7,7 +7,7 @@ SAIL := ./vendor/bin/sail
 	artisan composer migrate fresh db-show \
 	test test-catalog test-order pest \
 	pint duster duster-fix stan check \
-	npm npm-dev build
+	npm npm-dev build filament-assets assets
 
 # ------------------------------------------------------------------------------
 # Sail / Docker
@@ -96,5 +96,10 @@ npm: ## Run npm (usage: make npm cmd="install")
 npm-dev: ## Start Vite dev server
 	$(SAIL) npm run dev
 
+filament-assets: ## Publish Filament JS and font assets
+	$(SAIL) artisan filament:assets
+
 build: ## Build frontend assets
 	$(SAIL) npm run build
+
+assets: filament-assets build ## Publish Filament assets and build Vite bundle
