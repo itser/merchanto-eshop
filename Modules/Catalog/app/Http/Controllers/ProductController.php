@@ -4,19 +4,14 @@ namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
-use Modules\Catalog\Models\Product;
+use Modules\Catalog\Services\ProductListingService;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(ProductListingService $productListing): View
     {
-        $products = Product::query()
-            ->with('category')
-            ->orderBy('name')
-            ->get();
-
         return view('catalog::products.index', [
-            'products' => $products,
+            'products' => $productListing->listForStorefront(),
         ]);
     }
 }

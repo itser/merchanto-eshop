@@ -28,6 +28,14 @@ Controller / Livewire / Filament page
 - ✅ Services express use cases (`listProductsForStorefront`, `placeOrder`, etc.).
 - ✅ Repositories encapsulate all DB access for one aggregate (e.g. `ProductRepository`).
 
+## Shared infrastructure (`app/`)
+
+```
+app/Repositories/
+├── Contracts/RepositoryInterface.php   ← thin common contract (find, findOrFail)
+└── Eloquent/EloquentRepository.php     ← abstract base for all Eloquent repos
+```
+
 ## Module layout
 
 ```
@@ -35,9 +43,11 @@ Modules/{Module}/app/
 ├── Http/Controllers/
 ├── Services/
 └── Repositories/
+    ├── Contracts/        ← entity interfaces (extend RepositoryInterface)
+    └── Eloquent/         ← concrete implementations (extend EloquentRepository)
 ```
 
-Register repository bindings in the module `ServiceProvider` when using interfaces.
+Register entity repository bindings in the module `ServiceProvider`.
 
 ## Cross-module (unchanged)
 

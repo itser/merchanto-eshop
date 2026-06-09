@@ -6,6 +6,8 @@ use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Catalog\Filament\Resources\CategoryResource;
 use Modules\Catalog\Filament\Resources\ProductResource;
+use Modules\Catalog\Repositories\Contracts\ProductRepositoryInterface;
+use Modules\Catalog\Repositories\Eloquent\EloquentProductRepository;
 use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class CatalogServiceProvider extends ModuleServiceProvider
@@ -40,6 +42,8 @@ class CatalogServiceProvider extends ModuleServiceProvider
     public function register(): void
     {
         parent::register();
+
+        $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
 
         Panel::configureUsing(function (Panel $panel): void {
             if ($panel->getId() !== 'admin') {
