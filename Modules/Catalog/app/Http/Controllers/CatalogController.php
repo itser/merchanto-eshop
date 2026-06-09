@@ -20,7 +20,7 @@ class CatalogController extends Controller
      */
     public function create()
     {
-        return view('catalog::create');
+        return view('catalog::index');
     }
 
     /**
@@ -33,7 +33,7 @@ class CatalogController extends Controller
      */
     public function show($id)
     {
-        return view('catalog::show');
+        return view('catalog::index');
     }
 
     /**
@@ -41,7 +41,7 @@ class CatalogController extends Controller
      */
     public function edit($id)
     {
-        return view('catalog::edit');
+        return view('catalog::index');
     }
 
     /**

@@ -8,6 +8,7 @@ parameters:
         - app/
         - config/
         - database/
+        - Modules/Catalog/app/
         - routes/
         - tests/
 
