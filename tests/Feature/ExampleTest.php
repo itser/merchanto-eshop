@@ -1,5 +1,7 @@
 <?php
 
+use function Pest\Laravel\get;
+
 test('application health check', function () {
-    $this->get('/up')->assertOk();
+    get('/up')->assertOk();
 });
