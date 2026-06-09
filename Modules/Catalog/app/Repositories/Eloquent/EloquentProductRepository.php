@@ -9,16 +9,16 @@ use Modules\Catalog\Repositories\Contracts\ProductRepositoryInterface;
 
 class EloquentProductRepository extends EloquentRepository implements ProductRepositoryInterface
 {
-    protected function modelClass(): string
-    {
-        return Product::class;
-    }
-
     public function listForStorefront(): Collection
     {
-        return $this->newQuery()
+        return Product::query()
             ->with('category')
             ->orderBy('name')
             ->get();
+    }
+
+    protected function modelClass(): string
+    {
+        return Product::class;
     }
 }

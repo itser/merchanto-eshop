@@ -1,5 +1,7 @@
 <?php
 
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,10 +13,10 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
+pest()->extend(TestCase::class)
     ->in('Feature');
 
-pest()->extend(Tests\TestCase::class)
+pest()->extend(TestCase::class)
     ->in('../Modules/*/tests/Feature');
 
 /*
@@ -27,4 +29,3 @@ pest()->extend(Tests\TestCase::class)
 | to assert different things. Of course, you may extend the Expectation API at any time.
 |
 */
-
