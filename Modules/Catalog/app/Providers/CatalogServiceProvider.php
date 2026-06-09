@@ -5,6 +5,7 @@ namespace Modules\Catalog\Providers;
 use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Catalog\Filament\Resources\CategoryResource;
+use Modules\Catalog\Filament\Resources\ProductResource;
 use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class CatalogServiceProvider extends ModuleServiceProvider
@@ -47,6 +48,7 @@ class CatalogServiceProvider extends ModuleServiceProvider
 
             $panel->resources([
                 CategoryResource::class,
+                ProductResource::class,
             ]);
         });
     }

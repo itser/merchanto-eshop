@@ -23,6 +23,15 @@ class Product extends Model
         'stock',
     ];
 
+    /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'description' => '',
+        'price' => 0,
+        'stock' => 0,
+    ];
+
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
