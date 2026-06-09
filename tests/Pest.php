@@ -14,6 +14,10 @@
 pest()->extend(Tests\TestCase::class)
     ->in('Feature');
 
+beforeEach(function () {
+    $this->withoutVite();
+})->in('Feature');
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
