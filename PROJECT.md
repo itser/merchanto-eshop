@@ -10,6 +10,7 @@
 | Commits | Maximal narrow scope, one logical change each |
 | Order placement | `PlaceOrderService` (not Action) |
 | Category tests | Separate `CategoryManagementTest` |
+| Data access | Repository pattern: Controller → Service → Repository → Model |
 | Contract tests | Separate `ProductCatalogContractTest` |
 | Add to cart | Phase 4 only (Phase 1 = browse only) |
 | README | Written incrementally from Phase 0 |

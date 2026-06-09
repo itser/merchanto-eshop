@@ -1,0 +1,64 @@
+---
+description: Layered data access — Controller → Service → Repository → Model
+alwaysApply: true
+---
+
+# Repository pattern
+
+Maximum decomposition within each module. Data flows through layers; each layer has one responsibility.
+
+## Layer flow
+
+```
+Controller / Livewire / Filament page
+        ↓
+    Service          ← business logic, orchestration
+        ↓
+   Repository        ← queries, persistence
+        ↓
+      Model           ← Eloquent entity only
+```
+
+## Rules
+
+- ❌ Controllers must **not** call Eloquent models or `Model::query()` directly.
+- ❌ Services must **not** embed raw query logic — delegate to repositories.
+- ❌ Repositories must **not** contain business rules (validation, workflows, notifications).
+- ✅ Controllers are thin: receive request → call service → return response/view.
+- ✅ Services express use cases (`listProductsForStorefront`, `placeOrder`, etc.).
+- ✅ Repositories encapsulate all DB access for one aggregate (e.g. `ProductRepository`).
+
+## Module layout
+
+```
+Modules/{Module}/app/
+├── Http/Controllers/
+├── Services/
+└── Repositories/
+```
+
+Register repository bindings in the module `ServiceProvider` when using interfaces.
+
+## Cross-module (unchanged)
+
+- Order module still must **not** import Catalog models or repositories.
+- Inter-module reads/writes go through `app/Contracts/` + DTOs; contract implementations may use repositories internally.
+
+## Example (Catalog storefront)
+
+```php
+// Controller
+public function index(ProductListingService $service): View
+{
+    return view('catalog::products.index', [
+        'products' => $service->listForStorefront(),
+    ]);
+}
+
+// Service → Repository → Model
+```
+
+## Filament
+
+- Filament Resources/Pages follow the same rule: call a **service**, not a model directly.
+- Table/form configuration may stay in the Resource; data loading and mutations go through services.

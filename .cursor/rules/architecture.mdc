@@ -49,3 +49,8 @@ Order needs product data without a Catalog dependency:
 
 - Single admin panel at `/admin`.
 - Resources colocated in each module, registered from module ServiceProviders.
+
+## Intra-module layers
+
+- Follow `repository-pattern.mdc`: Controller → Service → Repository → Model.
+- No direct model access from controllers or HTTP entry points.
