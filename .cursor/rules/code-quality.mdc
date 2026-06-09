@@ -5,25 +5,8 @@ alwaysApply: true
 
 # Commits
 
-- **English**, brief and precise — state exactly what changed.
+- Follow `commits.mdc` for message format.
 - One logical change per commit; focused diffs only.
-- Use imperative mood: `Add Product migration`, not `Added` or `Adding`.
-- Subject line ≤ 72 characters; no trailing period.
-- Body optional — only when context is not obvious from the subject.
-
-```
-# Good
-Add Catalog Product and Category migrations
-Register ProductCatalogInterface in CatalogServiceProvider
-Fix stock decrement rollback on order failure
-
-# Bad
-fix stuff
-WIP
-updates
-Refactored some things and also fixed tests and updated readme
-```
-
 - Clear commit history required for submission (per assignment).
 
 # Code Quality

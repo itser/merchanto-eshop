@@ -1,0 +1,32 @@
+---
+description: Git commit message format — short subject only
+alwaysApply: true
+---
+
+# Commit Messages
+
+When generating or writing any Git commit message for this project:
+
+## Format
+
+- **Subject line only** — no body, no bullet lists, no multi-paragraph text.
+- **Max 72 characters** (aim for 50 or fewer).
+- **English**, imperative mood: `Add`, `Fix`, `Update`, `Remove`, `Configure`.
+- No trailing period.
+- State **one** change precisely — match a narrow commit scope.
+
+## Examples
+
+```
+Add .gitignore
+Configure PostgreSQL test database
+Add Catalog products migration
+Register ProductCatalogInterface binding
+```
+
+## Do not
+
+- Do not write long summaries of all changed files.
+- Do not use prefixes like `feat:`, `chore:` unless already used in repo history.
+- Do not combine unrelated changes in one message.
+- Do not use `WIP`, `updates`, `fix stuff`, `misc changes`.
