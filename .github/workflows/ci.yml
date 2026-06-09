@@ -65,6 +65,7 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           sed -i 's/DB_HOST=pgsql/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_DATABASE=merchanto_eshop/DB_DATABASE=merchanto_eshop_testing/' .env
           sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=array/' .env
           sed -i 's/CACHE_STORE=database/CACHE_STORE=array/' .env
 
@@ -72,7 +73,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Run tests
-        run: php artisan test --without-tty
+        run: vendor/bin/pest --colors=never
 
       - name: Lint code style
         run: vendor/bin/duster lint
