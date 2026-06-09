@@ -45,6 +45,7 @@ yarn-error.log
 
 # Laravel Sail
 /docker/mysql
-/docker/pgsql
+/docker/pgsql/*
+!/docker/pgsql/create-testing-database.sql
 /docker/mariadb
 /docker/redis
