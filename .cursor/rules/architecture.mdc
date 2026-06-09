@@ -1,0 +1,51 @@
+---
+description: Modular architecture and cross-module communication rules
+alwaysApply: true
+---
+
+# Architecture
+
+## Modules
+
+- Use `nwidart/laravel-modules` with **Catalog** and **Order** modules.
+- Tests live inside each module: `Modules/{Module}/tests/Feature/`.
+
+## Module isolation (critical)
+
+- ❌ Never import or use another module's models (e.g. Order must not use `Catalog\Models\Product`).
+- ❌ Never call another module's services directly.
+- ✅ Cross-module communication only via **interfaces/contracts** and DTOs in `app/`.
+- ✅ Bind implementations in module ServiceProviders.
+
+## Contracts
+
+- `app/Contracts/Catalog/ProductCatalogInterface.php`
+- `app/DataTransferObjects/Catalog/ProductData.php`
+- `app/DataTransferObjects/Catalog/ProductSnapshot.php`
+- Implementation: `Modules/Catalog/Services/ProductCatalogService.php`
+- Binding: `CatalogServiceProvider`
+
+## Order items (snapshot + reference)
+
+- `product_id` (int) on `order_items` — reference only, **no FK**, no Eloquent relation to Catalog.
+- Snapshot fields on each line item: product name, price, quantity (captured at order time).
+- DTOs: `ProductData` (read), `ProductSnapshot` (write to order item).
+
+## Cross-module communication
+
+Order needs product data without a Catalog dependency:
+
+- Display products during checkout
+- Store snapshot + `product_id` with each order item
+- Show product details in order views from stored snapshot
+- Keep data consistent — price/name frozen at order time
+
+## Order placement
+
+- Decrement stock via contract method.
+- Wrap order creation + stock decrement in a single **DB transaction**.
+
+## Filament
+
+- Single admin panel at `/admin`.
+- Resources colocated in each module, registered from module ServiceProviders.

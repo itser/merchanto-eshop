@@ -1,0 +1,66 @@
+---
+description: Code quality, ownership, and submission standards
+alwaysApply: true
+---
+
+# Commits
+
+- **English**, brief and precise — state exactly what changed.
+- One logical change per commit; focused diffs only.
+- Use imperative mood: `Add Product migration`, not `Added` or `Adding`.
+- Subject line ≤ 72 characters; no trailing period.
+- Body optional — only when context is not obvious from the subject.
+
+```
+# Good
+Add Catalog Product and Category migrations
+Register ProductCatalogInterface in CatalogServiceProvider
+Fix stock decrement rollback on order failure
+
+# Bad
+fix stuff
+WIP
+updates
+Refactored some things and also fixed tests and updated readme
+```
+
+- Clear commit history required for submission (per assignment).
+
+# Code Quality
+
+- Run **Laravel Duster** before committing; all style checks must pass.
+- **Larastan** level ≥ 5 with zero errors — set up in Phase 0, not deferred.
+- **GitHub Actions** CI from Phase 0: Pest + Duster + Larastan.
+- All **Pest** feature tests must pass before submission (see `testing.mdc`).
+- Minimize scope — focused diffs, no unrelated changes.
+- Match existing conventions; reuse abstractions over reimplementing.
+- Type hints and clear Laravel patterns.
+
+# Code Ownership
+
+- Understand every architectural decision — live review will require explaining and modifying code in real time.
+- AI tools are allowed; validate against current official docs (Laravel, Filament, Livewire, nwidart).
+- Do not submit code you cannot explain or defend.
+
+# Submission
+
+- Public GitHub repo, tag `v1.0`.
+- `.cursor/rules/` committed to the repo.
+- Build from scratch in this repository.
+- Migrations for all entities; seeded demo data.
+- Application runs without errors before submission.
+- Verify README instructions on a fresh environment.
+
+## README (required before v1.0)
+
+- Installation steps, database setup, environment configuration, asset compilation
+- How to start the app (Sail), access admin, test main functionality
+- Test commands: all tests + module-specific tests + any test setup
+- Architecture overview: module structure, cross-module communication, patterns used
+- Demo instructions for evaluators
+
+# Principles
+
+- Clean architecture over complex features.
+- Official documentation drives decisions — understand the "why" behind patterns.
+- Document architectural thought process in README.

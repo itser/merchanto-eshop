@@ -1,0 +1,8 @@
+---
+description: Language conventions — English in project
+alwaysApply: true
+---
+
+# Language
+
+- **English** — code, comments, commit messages, documentation, UI labels, test names/descriptions, README, PROJECT.md, and all project artifacts.

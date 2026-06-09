@@ -1,0 +1,72 @@
+---
+description: Required technology stack, business scope, and frontend conventions
+alwaysApply: true
+---
+
+# Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Laravel (latest stable) |
+| Dev environment | Laravel Sail |
+| Modules | `nwidart/laravel-modules` |
+| Frontend | Livewire + Blade layouts, Vite |
+| Admin | Filament |
+| Database | PostgreSQL (separate DB for tests) |
+| Tests | Pest (feature tests) |
+| Code style | Laravel Duster |
+| Static analysis | Larastan level ≥ 5 (from Phase 0) |
+| CI | GitHub Actions: Pest + Duster + Larastan |
+
+## Modules (v1)
+
+- **Catalog** and **Order** only — no extra modules for now.
+
+## Business scope
+
+**Catalog:** Product (name, description, price, stock), Category (`belongsTo`, one layer), Filament CRUD for **Product and Category**, public browsing.
+
+**Order:** customer name + email, order items, total amount, status workflow `pending → confirmed → shipped → delivered` (no extra statuses in v1), Filament admin, Livewire cart/checkout/view.
+
+## Database
+
+- Migrations for all entities (categories, products, orders, order items, users).
+- Demo seeders required (categories, products, admin user; sample orders optional).
+- Admin user seeder for Filament access.
+
+### Test database (separate from dev)
+
+- **Dev DB** — application data (Sail PostgreSQL).
+- **Test DB** — isolated PostgreSQL database, used only by Pest/PHPUnit.
+- Configure via `.env.testing` (e.g. `DB_DATABASE=merchanto_eshop_testing`).
+- `phpunit.xml` must point tests at the testing environment.
+- Create the test database in Sail setup; CI uses the same separation.
+- Tests must never read or write the dev database.
+
+## Public layout
+
+- Shared app layout with proper structure (header, main content, Vite-compiled assets).
+- Minimal design — clean and functional, not a design showcase.
+
+## Public frontend (minimal session cart)
+
+- Session-based cart — **no Cart DB table**.
+- Order persisted to database **only on checkout submit**, not on "Add to cart".
+- Cart cleared after successful order placement.
+
+**Routes:**
+
+- `/products` — public product list (browse catalog)
+- `/checkout` — cart review, customer form (name + email), place order
+- `/orders/{order}` — order view + status display
+
+**UX:**
+
+- Product list with "Add to cart" action (Livewire).
+- Cart badge in layout header (top-right) showing item count.
+- No public auth.
+
+## Auth
+
+- Standard `User` model.
+- One admin user created via seeder for Filament `/admin`.

@@ -1,0 +1,36 @@
+---
+description: Pest feature testing conventions and TDD workflow
+alwaysApply: true
+---
+
+# Testing
+
+- Use **Pest feature tests only** (not unit tests) — per assignment requirements.
+- Organize tests per module under `Modules/{Module}/tests/Feature/`.
+- Use a **separate PostgreSQL database** for tests (never run tests against the dev database).
+
+## TDD workflow
+
+Development follows **feature-test-driven** approach:
+
+1. **Red** — write a failing Pest feature test for the behavior.
+2. **Green** — implement the minimum code to pass.
+3. **Refactor** — clean up while keeping tests green.
+
+- Tests define expected behavior before implementation.
+- One feature/behavior per test case; descriptive test names in English.
+- Use `RefreshDatabase` (or equivalent) so each test runs on a clean test DB.
+
+## Required tests
+
+**Catalog:** `ProductManagementTest`, `ProductDisplayTest`
+
+**Order:** `OrderCreationTest`, `OrderManagementTest`
+
+## Coverage
+
+- Product CRUD
+- Order creation workflow
+- Cross-module orders + products
+- Filament admin interactions
+- Livewire component behavior
