@@ -89,7 +89,7 @@ Order must **not** import `Modules\Catalog\*` models, repositories, or services.
 
 - [x] `CategoryRepository` + Filament services for Category CRUD
 - [x] Refactor `CategoryResource` / `ProductResource` → Service → Repository
-- [ ] Remove scaffold `CatalogController` and unused module views/routes
+- [x] Remove scaffold `CatalogController` and unused module views/routes
 
 ### Phase 2 — Contracts
 
