@@ -108,7 +108,7 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 - [x] Create `Order` module (+ `phpunit.xml` testsuite, Makefile `test-order`)
 - [x] Migration: `orders`
 - [x] Migration: `order_items` (snapshot + `product_id`, no FK to Catalog)
-- [ ] `OrderStatus` enum
+- [x] `OrderStatus` enum
 - [ ] Models: `Order`, `OrderItem` + factories
 - [ ] `OrderRepositoryInterface` + `EloquentOrderRepository`
 - [ ] `PlaceOrderService` — DB transaction; depends on `ProductCatalogInterface` only (not Catalog module)
