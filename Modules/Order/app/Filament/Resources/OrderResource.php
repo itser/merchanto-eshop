@@ -46,7 +46,7 @@ class OrderResource extends Resource
                     ->disabled(),
                 Select::make('status')
                     ->options(function (?Order $record): array {
-                        $status = $record?->status ?? OrderStatus::Pending;
+                        $status = $record !== null ? $record->status : OrderStatus::Pending;
 
                         $options = [];
 

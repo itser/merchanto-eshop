@@ -9,7 +9,9 @@ parameters:
         - config/
         - database/
         - Modules/Catalog/app/
+        - Modules/Catalog/tests/
         - Modules/Order/app/
+        - Modules/Order/tests/
         - routes/
         - tests/
 

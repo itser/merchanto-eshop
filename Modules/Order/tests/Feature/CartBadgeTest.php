@@ -17,7 +17,7 @@ beforeEach(function () {
 test('products page renders cart badge in header', function () {
     get('/products')
         ->assertOk()
-        ->assertSeeLivewire(CartBadge::class);
+        ->assertSee('data-test="cart-count"', false);
 });
 
 test('cart badge shows zero when cart is empty', function () {
