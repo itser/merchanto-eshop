@@ -2,7 +2,9 @@
 
 namespace Modules\Order\Providers;
 
+use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
+use Modules\Order\Filament\Resources\OrderResource;
 use Modules\Order\Repositories\Contracts\OrderRepositoryInterface;
 use Modules\Order\Repositories\Eloquent\EloquentOrderRepository;
 use Nwidart\Modules\Support\ModuleServiceProvider;
@@ -41,6 +43,16 @@ class OrderServiceProvider extends ModuleServiceProvider
         parent::register();
 
         $this->app->bind(OrderRepositoryInterface::class, EloquentOrderRepository::class);
+
+        Panel::configureUsing(function (Panel $panel): void {
+            if ($panel->getId() !== 'admin') {
+                return;
+            }
+
+            $panel->resources([
+                OrderResource::class,
+            ]);
+        });
     }
 
     /**

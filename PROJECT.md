@@ -113,9 +113,9 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 - [x] `OrderRepositoryInterface` + `EloquentOrderRepository`
 - [x] `PlaceOrderService` — DB transaction; depends on `ProductCatalogInterface` only (not Catalog module)
 - [x] **TDD** `OrderCreationTest` — place order, items, total, stock decremented via contract
-- [ ] `OrderManagementService` for admin status transitions
-- [ ] Filament `OrderResource` → `OrderManagementService`
-- [ ] **TDD** `OrderManagementTest` — list orders, status transitions in admin
+- [x] `OrderManagementService` for admin status transitions
+- [x] Filament `OrderResource` → `OrderManagementService`
+- [x] **TDD** `OrderManagementTest` — list orders, status transitions in admin
 - [ ] Update README: architecture overview (modules, layers, contracts)
 
 ### Phase 4 — Cart & checkout (Order module, public frontend)
