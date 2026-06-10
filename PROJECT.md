@@ -129,7 +129,7 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 - [x] `/checkout` — cart review, name + email, place order via `PlaceOrderService`
 - [x] Clear cart after successful order
 - [x] `/orders/{order}` — order view + status display (from snapshot, not Catalog)
-- [ ] **TDD** tests: cart, checkout, order view, cross-module snapshot
+- [x] **TDD** tests: cart, checkout, order view, cross-module snapshot
 
 ### Phase 5 — Submission
 

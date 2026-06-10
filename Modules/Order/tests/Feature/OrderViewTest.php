@@ -29,7 +29,7 @@ test('guest can view placed order from snapshot data', function () {
 
     get(route('orders.show', $order))
         ->assertOk()
-        ->assertSee('Order #'.$order->id)
+        ->assertSee('Order #' . $order->id)
         ->assertSee('Alex Smith')
         ->assertSee('alex@example.com')
         ->assertSee('Snapshot Widget')

@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\Catalog\InsufficientStockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Modules\Catalog\Models\Product;
@@ -45,7 +46,7 @@ test('failed place order does not dispatch order placed event', function () {
         items: [
             ['product_id' => $product->id, 'quantity' => 3],
         ],
-    ))->toThrow(\App\Exceptions\Catalog\InsufficientStockException::class);
+    ))->toThrow(InsufficientStockException::class);
 
     Event::assertNotDispatched(OrderPlaced::class);
 });
