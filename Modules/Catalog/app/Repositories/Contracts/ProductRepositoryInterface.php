@@ -20,6 +20,17 @@ interface ProductRepositoryInterface extends RepositoryInterface
     public function listForStorefront(): Collection;
 
     /**
+     * @return Collection<int, Product>
+     */
+    public function listAvailable(): Collection;
+
+    public function findById(int $id): ?Product;
+
+    public function hasStock(int $productId, int $quantity): bool;
+
+    public function decrementStock(int $productId, int $quantity): void;
+
+    /**
      * @param  array<string, mixed>  $attributes
      */
     public function create(array $attributes): Product;

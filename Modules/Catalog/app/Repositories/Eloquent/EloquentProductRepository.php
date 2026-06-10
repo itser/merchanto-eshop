@@ -25,6 +25,38 @@ class EloquentProductRepository extends EloquentRepository implements ProductRep
             ->get();
     }
 
+    public function listAvailable(): Collection
+    {
+        return Product::query()
+            ->where('stock', '>', 0)
+            ->orderBy('name')
+            ->get();
+    }
+
+    public function findById(int $id): ?Product
+    {
+        return Product::query()->find($id);
+    }
+
+    public function hasStock(int $productId, int $quantity): bool
+    {
+        $product = $this->findById($productId);
+
+        return $product !== null && $product->stock >= $quantity;
+    }
+
+    public function decrementStock(int $productId, int $quantity): void
+    {
+        $affected = Product::query()
+            ->whereKey($productId)
+            ->where('stock', '>=', $quantity)
+            ->decrement('stock', $quantity);
+
+        if ($affected === 0) {
+            throw new \RuntimeException("Insufficient stock for product [{$productId}].");
+        }
+    }
+
     public function create(array $attributes): Product
     {
         return Product::query()->create($attributes);
