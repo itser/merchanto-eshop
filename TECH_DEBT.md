@@ -22,6 +22,7 @@
 | TD-003 | `docs/PATTERNS.md` for live review | Before README / review |
 | TD-004 | Constructor injection in HTTP controllers | Phase 5 / submission polish |
 | TD-005 | Additional `OrderPlaced` listeners (email, queue) | Phase 5 / submission polish |
+| TD-006 | Audit domain events across modules | Phase 5 / submission polish |
 
 ---
 
@@ -75,3 +76,24 @@ Not a functional issue — consistency / readability only.
 - `OrderStatusChanged` event when admin updates status in Filament
 
 See `.cursor/rules/events.mdc` for dispatch and listener conventions.
+
+---
+
+## TD-006 — Audit domain events across modules
+
+**Now:** only `OrderPlaced` → `ClearCartOnOrderPlaced` is implemented. Other actions have no domain events (by design for v1).
+
+**Later (Phase 5):** review services and use cases for side effects that deserve events + listeners. Candidates to evaluate (add only if a concrete listener exists):
+
+| Area | Service / action | Possible event | Possible listener |
+|---|---|---|---|
+| Order | `OrderManagementService::update` (status) | `OrderStatusChanged` | customer email, admin log |
+| Order | `PlaceOrderService::place` | (already `OrderPlaced`) | `SendOrderConfirmation` (TD-005) |
+| Catalog | `ProductManagementService::create/update/delete` | `ProductCreated`, etc. | only if cache/search/webhook needed |
+| Catalog | `CategoryManagementService::*` | unlikely for v1 | — |
+| Order | `AddToCartButton` / `CartService` | no Laravel event | Livewire `cart-updated` is enough |
+
+**Rule:** do not add events for CRUD without a listener; see `.cursor/rules/events.mdc`.
+
+**Outcome:** short list in README architecture or `docs/PATTERNS.md` (TD-003) of which events exist and why.
+
