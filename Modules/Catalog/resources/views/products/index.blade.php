@@ -41,10 +41,7 @@
                         </div>
                     </dl>
 
-                    @livewire(\Modules\Order\Livewire\AddToCartButton::class, [
-                        'productId' => $product->id,
-                        'canAdd' => $product->stock > 0,
-                    ], key('add-to-cart-'.$product->id))
+                    <x-add-to-cart :product-id="$product->id" :can-add="$product->stock > 0" />
                 </article>
             @endforeach
         </div>

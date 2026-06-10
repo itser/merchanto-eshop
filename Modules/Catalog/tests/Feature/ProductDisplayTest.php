@@ -36,3 +36,11 @@ test('products page shows empty state when no products exist', function () {
         ->assertOk()
         ->assertSee('No products available');
 });
+
+test('products page uses shared add to cart component not order module view', function () {
+    $view = file_get_contents(module_path('Catalog', 'resources/views/products/index.blade.php'));
+
+    expect($view)
+        ->toContain('<x-add-to-cart')
+        ->not->toContain('Modules\\Order');
+});

@@ -13,6 +13,8 @@ Two bounded contexts via `nwidart/laravel-modules`:
 
 Modules do **not** import each other's models, repositories, or services. Shared cross-module contracts live in `app/`.
 
+**Storefront UI:** Catalog views use app-level Blade components (e.g. `<x-add-to-cart>`) that wire Order Livewire in `resources/views/components/` — Catalog templates never reference `Modules\Order\*` directly.
+
 ```
 Modules/Catalog          Modules/Order
      │                         │
