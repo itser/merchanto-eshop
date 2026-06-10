@@ -110,7 +110,7 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 - [x] Migration: `order_items` (snapshot + `product_id`, no FK to Catalog)
 - [x] `OrderStatus` enum
 - [x] Models: `Order`, `OrderItem` + factories
-- [ ] `OrderRepositoryInterface` + `EloquentOrderRepository`
+- [x] `OrderRepositoryInterface` + `EloquentOrderRepository`
 - [ ] `PlaceOrderService` — DB transaction; depends on `ProductCatalogInterface` only (not Catalog module)
 - [ ] **TDD** `OrderCreationTest` — place order, items, total, stock decremented via contract
 - [ ] `OrderManagementService` for admin status transitions

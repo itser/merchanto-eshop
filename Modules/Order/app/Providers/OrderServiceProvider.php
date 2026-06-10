@@ -2,8 +2,10 @@
 
 namespace Modules\Order\Providers;
 
-use Nwidart\Modules\Support\ModuleServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
+use Modules\Order\Repositories\Contracts\OrderRepositoryInterface;
+use Modules\Order\Repositories\Eloquent\EloquentOrderRepository;
+use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class OrderServiceProvider extends ModuleServiceProvider
 {
@@ -33,6 +35,13 @@ class OrderServiceProvider extends ModuleServiceProvider
         EventServiceProvider::class,
         RouteServiceProvider::class,
     ];
+
+    public function register(): void
+    {
+        parent::register();
+
+        $this->app->bind(OrderRepositoryInterface::class, EloquentOrderRepository::class);
+    }
 
     /**
      * Define module schedules.
