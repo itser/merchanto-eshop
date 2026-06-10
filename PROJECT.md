@@ -87,7 +87,7 @@ Order must **not** import `Modules\Catalog\*` models, repositories, or services.
 
 ### Phase 1.5 — Catalog tech debt (optional, before or during Phase 3)
 
-- [ ] `CategoryRepository` + Filament services for Category CRUD
+- [x] `CategoryRepository` + Filament services for Category CRUD
 - [ ] Refactor `CategoryResource` / `ProductResource` → Service → Repository
 - [ ] Remove scaffold `CatalogController` and unused module views/routes
 

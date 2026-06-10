@@ -12,10 +12,12 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Catalog\Filament\Resources\CategoryResource\Pages\CreateCategory;
 use Modules\Catalog\Filament\Resources\CategoryResource\Pages\EditCategory;
 use Modules\Catalog\Filament\Resources\CategoryResource\Pages\ListCategories;
 use Modules\Catalog\Models\Category;
+use Modules\Catalog\Repositories\Contracts\CategoryRepositoryInterface;
 
 class CategoryResource extends Resource
 {
@@ -24,6 +26,14 @@ class CategoryResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    /**
+     * @return Builder<Category>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return app(CategoryRepositoryInterface::class)->query();
+    }
 
     public static function form(Schema $schema): Schema
     {
