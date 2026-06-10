@@ -101,7 +101,7 @@ Order must **not** import `Modules\Catalog\*` models, repositories, or services.
 - [x] `ProductCatalogService` implements interface; uses repository only (no direct model access)
 - [x] Register `ProductCatalogInterface` → `ProductCatalogService` in `CatalogServiceProvider`
 
-### Phase 3 — Order module (backend)
+### Phase 3 — Order module (backend) ✅
 
 Build with Repository → Service layers from day one (same pattern as Catalog).
 
@@ -116,7 +116,7 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 - [x] `OrderManagementService` for admin status transitions
 - [x] Filament `OrderResource` → `OrderManagementService`
 - [x] **TDD** `OrderManagementTest` — list orders, status transitions in admin
-- [ ] Update README: architecture overview (modules, layers, contracts)
+- [x] Update README: architecture overview (modules, layers, contracts)
 
 ### Phase 4 — Cart & checkout (Order module, public frontend)
 
