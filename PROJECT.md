@@ -128,7 +128,7 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 - [x] Public routes in `Modules/Order/routes/web.php`: `/checkout`, `/orders/{order}`
 - [x] `/checkout` — cart review, name + email, place order via `PlaceOrderService`
 - [x] Clear cart after successful order
-- [ ] `/orders/{order}` — order view + status display (from snapshot, not Catalog)
+- [x] `/orders/{order}` — order view + status display (from snapshot, not Catalog)
 - [ ] **TDD** tests: cart, checkout, order view, cross-module snapshot
 
 ### Phase 5 — Submission
