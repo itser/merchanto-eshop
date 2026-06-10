@@ -5,6 +5,7 @@ namespace Modules\Order\Database\Seeders;
 use App\Contracts\Catalog\ProductCatalogInterface;
 use Illuminate\Database\Seeder;
 use Modules\Order\Enums\OrderStatus;
+use Modules\Order\Models\Order;
 use Modules\Order\Services\OrderManagementService;
 use Modules\Order\Services\PlaceOrderService;
 use RuntimeException;
@@ -71,8 +72,27 @@ class SampleOrderSeeder extends Seeder
             $status = $orderData['status'] ?? OrderStatus::Pending;
 
             if ($status !== OrderStatus::Pending) {
-                $orderManagement->update($order, ['status' => $status]);
+                $this->advanceToStatus($orderManagement, $order, $status);
             }
+        }
+    }
+
+    private function advanceToStatus(
+        OrderManagementService $orderManagement,
+        Order $order,
+        OrderStatus $target,
+    ): void {
+        while ($order->status !== $target) {
+            $next = match ($order->status) {
+                OrderStatus::Pending => OrderStatus::Confirmed,
+                OrderStatus::Confirmed => OrderStatus::Shipped,
+                OrderStatus::Shipped => OrderStatus::Delivered,
+                OrderStatus::Delivered => throw new RuntimeException(
+                    "Cannot advance order [{$order->id}] from delivered to [{$target->value}].",
+                ),
+            };
+
+            $order = $orderManagement->update($order, ['status' => $next]);
         }
     }
 
