@@ -24,10 +24,7 @@
                         Products
                     </a>
 
-                    {{-- Cart badge: Livewire component in Phase 4 --}}
-                    <span class="text-gray-500">
-                        Cart
-                    </span>
+                    @livewire(\Modules\Order\Livewire\CartBadge::class)
                 </nav>
             </div>
         </header>

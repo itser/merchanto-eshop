@@ -124,7 +124,7 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 
 - [x] `CartService` — session-based cart (no DB table)
 - [x] Livewire: add to cart from `/products`
-- [ ] Livewire: cart badge in `resources/views/layouts/app.blade.php` header
+- [x] Livewire: cart badge in `resources/views/layouts/app.blade.php` header
 - [ ] Public routes in `Modules/Order/routes/web.php`: `/checkout`, `/orders/{order}`
 - [ ] `/checkout` — cart review, name + email, place order via `PlaceOrderService`
 - [ ] Clear cart after successful order
