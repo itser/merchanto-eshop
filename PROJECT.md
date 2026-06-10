@@ -111,8 +111,8 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 - [x] `OrderStatus` enum
 - [x] Models: `Order`, `OrderItem` + factories
 - [x] `OrderRepositoryInterface` + `EloquentOrderRepository`
-- [ ] `PlaceOrderService` — DB transaction; depends on `ProductCatalogInterface` only (not Catalog module)
-- [ ] **TDD** `OrderCreationTest` — place order, items, total, stock decremented via contract
+- [x] `PlaceOrderService` — DB transaction; depends on `ProductCatalogInterface` only (not Catalog module)
+- [x] **TDD** `OrderCreationTest` — place order, items, total, stock decremented via contract
 - [ ] `OrderManagementService` for admin status transitions
 - [ ] Filament `OrderResource` → `OrderManagementService`
 - [ ] **TDD** `OrderManagementTest` — list orders, status transitions in admin
