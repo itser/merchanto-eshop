@@ -53,7 +53,7 @@ make npm cmd="install" && make assets
 # 2. Automated checks
 make test
 make duster
-make stan    # if cache lock error — see Tests & quality section
+make stan    # Larastan (cache in storage/phpstan)
 ```
 
 **Browser smoke test** (http://localhost:8080):
@@ -99,8 +99,7 @@ make stan              # Larastan (level ≥ 5)
 make check             # test + duster + stan
 ```
 
-If `make stan` fails on cache lock:  
-`./vendor/bin/sail exec laravel.test sh -c 'rm -rf /tmp/phpstan && php vendor/bin/phpstan analyse'`
+PHPStan cache: `storage/phpstan` (configured in `phpstan.neon`).
 
 ## Architecture
 

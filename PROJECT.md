@@ -157,5 +157,5 @@ make test-order                      # Order module tests
 make duster                          # lint
 make duster-fix                      # auto-fix style
 make stan                            # Larastan
-make check                           # test + pint + duster + stan
+make check                           # test + duster + stan
 ```

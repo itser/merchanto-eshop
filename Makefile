@@ -72,7 +72,7 @@ pest: ## Run Pest directly
 # Code quality
 # ------------------------------------------------------------------------------
 
-pint: ## Fix code style (Laravel Pint)
+pint: ## Fix code style (Laravel Pint, uses pint.json aligned with Duster)
 	$(SAIL) bin pint
 
 duster: ## Lint code style (Laravel Duster)
@@ -84,7 +84,7 @@ duster-fix: ## Fix code style (Laravel Duster)
 stan: ## Run static analysis (Larastan)
 	$(SAIL) php vendor/bin/phpstan analyse
 
-check: test pint duster stan ## Run tests and all quality checks
+check: test duster stan ## Run tests and all quality checks
 
 # ------------------------------------------------------------------------------
 # Frontend (Vite)

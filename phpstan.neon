@@ -4,6 +4,8 @@ includes:
     - vendor/pestphp/pest/extension.neon
 
 parameters:
+    tmpDir: storage/phpstan
+
     paths:
         - app/
         - config/

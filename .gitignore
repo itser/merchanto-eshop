@@ -32,6 +32,7 @@ Thumbs.db
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/phpstan
 /bootstrap/cache/*
 !/bootstrap/cache/.gitignore
 /vendor
