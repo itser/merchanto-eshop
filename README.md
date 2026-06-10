@@ -119,6 +119,8 @@ Modules/Catalog          Modules/Order
 
 **Patterns:** Form Requests for HTTP input · domain events for side effects (`OrderPlaced` → clear cart) · module routes in `Modules/*/routes/web.php`
 
+Details: [`docs/PATTERNS.md`](docs/PATTERNS.md)
+
 Conventions: `.cursor/rules/` · plan: `PROJECT.md` · deferred work: `TECH_DEBT.md`
 
 ## CI

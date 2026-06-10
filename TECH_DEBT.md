@@ -19,7 +19,7 @@
 |---|---|---|
 | TD-001 | Money value object (`brick/money`) | After Phase 3 or if multi-currency |
 | TD-002 | Split CI into separate GitHub Actions jobs | After Phase 3 / submission polish |
-| TD-003 | `docs/PATTERNS.md` for live review | Before README / review |
+| TD-003 | `docs/PATTERNS.md` for live review | Done (see `docs/PATTERNS.md`) |
 | TD-004 | Constructor injection in HTTP controllers | Phase 5 / submission polish |
 | TD-005 | Additional `OrderPlaced` listeners (email, queue) | Phase 5 / submission polish |
 | TD-006 | Audit domain events across modules | Phase 5 / submission polish |
@@ -48,9 +48,7 @@ Not required by the assignment — DX improvement only.
 
 ## TD-003 — Patterns doc
 
-**Now:** patterns live only in `.cursor/rules/`.
-
-**Later:** short `docs/PATTERNS.md` — Modular Monolith, Repository, Ports & Adapters (`ProductCatalogInterface`), DTO, State (`OrderStatus`). Link from README.
+**Done:** [`docs/PATTERNS.md`](PATTERNS.md) — Modular Monolith, Repository, Ports & Adapters, DTO, Snapshot, domain events, order status workflow. Linked from README.
 
 ---
 
