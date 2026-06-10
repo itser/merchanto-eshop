@@ -40,7 +40,9 @@ app/Repositories/
 
 ```
 Modules/{Module}/app/
-├── Http/Controllers/
+├── Http/
+│   ├── Controllers/
+│   └── Requests/         ← Form Request classes (see form-requests.mdc)
 ├── Services/
 └── Repositories/
     ├── Contracts/        ← entity interfaces (extend RepositoryInterface)

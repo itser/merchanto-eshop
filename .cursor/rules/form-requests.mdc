@@ -1,0 +1,60 @@
+---
+description: HTTP input validation via Form Request classes
+alwaysApply: true
+---
+
+# Form requests
+
+Validate HTTP input in dedicated Form Request classes — not in controllers or services.
+
+## When to use
+
+- ✅ Controller actions that accept **POST**, **PUT**, or **PATCH** body/query input.
+- ❌ **GET** actions with no user input (e.g. product listing).
+- ❌ **Filament** — validation stays in Resource `form()` components.
+- ❌ **Livewire** — use component validation (`#[Validate]`, `$this->validate()`).
+
+## Rules
+
+- ❌ Do not call `$request->validate()` inline in controllers.
+- ❌ Do not validate HTTP input in services.
+- ✅ One Form Request per controller action (or shared request when rules are identical).
+- ✅ Controllers type-hint the Form Request; pass `$request->validated()` (or named fields) to services.
+- ✅ Place module requests in `Modules/{Module}/app/Http/Requests/`.
+- ✅ App-wide requests (if any) go in `app/Http/Requests/`.
+
+## Layer flow
+
+```
+HTTP request
+    ↓
+Form Request     ← authorization + validation rules
+    ↓
+Controller       ← thin: validated data → service → response
+    ↓
+Service
+```
+
+## Example (Order checkout)
+
+```php
+// Modules/Order/app/Http/Requests/CheckoutRequest.php
+public function rules(): array
+{
+    return [
+        'customer_name' => ['required', 'string', 'max:255'],
+        'customer_email' => ['required', 'email', 'max:255'],
+    ];
+}
+
+// Controller
+public function store(CheckoutRequest $request, CheckoutService $checkout): RedirectResponse
+{
+    $order = $checkout->place(
+        customerName: $request->validated('customer_name'),
+        customerEmail: $request->validated('customer_email'),
+    );
+
+    return redirect()->route('orders.show', $order);
+}
+```
