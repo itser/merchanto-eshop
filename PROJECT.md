@@ -106,8 +106,8 @@ Order must **not** import `Modules\Catalog\*` models, repositories, or services.
 Build with Repository → Service layers from day one (same pattern as Catalog).
 
 - [x] Create `Order` module (+ `phpunit.xml` testsuite, Makefile `test-order`)
-- [ ] Migration: `orders`
-- [ ] Migration: `order_items` (snapshot + `product_id`, no FK to Catalog)
+- [x] Migration: `orders`
+- [x] Migration: `order_items` (snapshot + `product_id`, no FK to Catalog)
 - [ ] `OrderStatus` enum
 - [ ] Models: `Order`, `OrderItem` + factories
 - [ ] `OrderRepositoryInterface` + `EloquentOrderRepository`
