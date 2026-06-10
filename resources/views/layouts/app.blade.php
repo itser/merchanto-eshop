@@ -10,6 +10,7 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet">
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="min-h-screen bg-gray-50 font-sans text-gray-900 antialiased">
         <header class="border-b border-gray-200 bg-white">
@@ -36,5 +37,6 @@
         </main>
 
         @stack('scripts')
+        @livewireScripts
     </body>
 </html>

@@ -40,6 +40,11 @@
                             <dd class="text-gray-900">{{ $product->stock }}</dd>
                         </div>
                     </dl>
+
+                    @livewire(\Modules\Order\Livewire\AddToCartButton::class, [
+                        'productId' => $product->id,
+                        'canAdd' => $product->stock > 0,
+                    ], key('add-to-cart-'.$product->id))
                 </article>
             @endforeach
         </div>

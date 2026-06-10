@@ -4,6 +4,7 @@ namespace Modules\Order\Providers;
 
 use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
+use Livewire\Livewire;
 use Modules\Order\Filament\Resources\OrderResource;
 use Modules\Order\Repositories\Contracts\OrderRepositoryInterface;
 use Modules\Order\Repositories\Eloquent\EloquentOrderRepository;
@@ -53,6 +54,13 @@ class OrderServiceProvider extends ModuleServiceProvider
                 OrderResource::class,
             ]);
         });
+    }
+
+    public function boot(): void
+    {
+        parent::boot();
+
+        Livewire::addNamespace('order', module_path('Order', 'app/Livewire'));
     }
 
     /**
