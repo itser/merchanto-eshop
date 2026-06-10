@@ -156,6 +156,6 @@ make test-catalog                    # Catalog module tests
 make test-order                      # Order module tests
 make duster                          # lint
 make duster-fix                      # auto-fix style
-make stan                            # Larastan (use root-shell if cache errors)
+make stan                            # Larastan
 make check                           # test + pint + duster + stan
 ```
