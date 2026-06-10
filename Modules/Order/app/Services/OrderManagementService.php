@@ -3,6 +3,7 @@
 namespace Modules\Order\Services;
 
 use Modules\Order\Enums\OrderStatus;
+use Modules\Order\Exceptions\InvalidOrderStatusTransitionException;
 use Modules\Order\Models\Order;
 use Modules\Order\Repositories\Contracts\OrderRepositoryInterface;
 
@@ -14,6 +15,8 @@ class OrderManagementService
 
     /**
      * @param  array<string, mixed>  $attributes
+     *
+     * @throws InvalidOrderStatusTransitionException
      */
     public function update(Order $order, array $attributes): Order
     {
@@ -25,6 +28,10 @@ class OrderManagementService
 
         if (is_string($status)) {
             $status = OrderStatus::from($status);
+        }
+
+        if (! $order->status->canTransitionTo($status)) {
+            throw new InvalidOrderStatusTransitionException($order->status, $status);
         }
 
         return $this->orderRepository->updateStatus($order, $status);

@@ -45,7 +45,17 @@ class OrderResource extends Resource
                 TextInput::make('total')
                     ->disabled(),
                 Select::make('status')
-                    ->options(OrderStatus::class)
+                    ->options(function (?Order $record): array {
+                        $status = $record?->status ?? OrderStatus::Pending;
+
+                        $options = [];
+
+                        foreach ($status->allowedTransitions() as $allowedStatus) {
+                            $options[$allowedStatus->value] = str($allowedStatus->value)->headline()->toString();
+                        }
+
+                        return $options;
+                    })
                     ->required(),
             ]);
     }
