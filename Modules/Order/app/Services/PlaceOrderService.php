@@ -6,6 +6,7 @@ use App\Contracts\Catalog\ProductCatalogInterface;
 use App\Exceptions\Catalog\InsufficientStockException;
 use Illuminate\Support\Facades\DB;
 use Modules\Order\Enums\OrderStatus;
+use Modules\Order\Events\OrderPlaced;
 use Modules\Order\Models\Order;
 use Modules\Order\Repositories\Contracts\OrderRepositoryInterface;
 
@@ -21,7 +22,7 @@ class PlaceOrderService
      */
     public function place(string $customerName, string $customerEmail, array $items): Order
     {
-        return DB::transaction(function () use ($customerName, $customerEmail, $items): Order {
+        $order = DB::transaction(function () use ($customerName, $customerEmail, $items): Order {
             $orderItems = [];
             $total = '0.00';
 
@@ -58,5 +59,9 @@ class PlaceOrderService
                 $orderItems,
             );
         });
+
+        event(new OrderPlaced($order));
+
+        return $order;
     }
 }

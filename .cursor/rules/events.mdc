@@ -1,0 +1,56 @@
+---
+description: Domain events and listeners for side effects after business actions
+alwaysApply: true
+---
+
+# Domain events
+
+Use Laravel domain events for **side effects** after a business action succeeds — not for core persistence inside the same use case.
+
+## When to use
+
+- ✅ Side effects after a domain action: clear cart, send email, audit log, notify external systems.
+- ✅ Dispatch from a **Service** after the DB transaction commits successfully.
+- ❌ Do not put side effects inline in orchestration services when a listener is the right home (e.g. cart clear after `OrderPlaced`).
+- ❌ Do not confuse with **Livewire** `$this->dispatch('cart-updated')` — that is a browser/UI event only.
+
+## Rules
+
+- Event classes live in `Modules/{Module}/app/Events/` — past tense name: `OrderPlaced`, `OrderStatusChanged`.
+- Listeners live in `Modules/{Module}/app/Listeners/` — verb phrase: `ClearCartOnOrderPlaced`.
+- Register mappings in the module `EventServiceProvider::$listen`.
+- Listeners stay **synchronous** unless explicitly queued later (see TECH_DEBT TD-005).
+- Dispatch **after** `DB::transaction()` completes — never dispatch before commit on actions that can roll back.
+- Core use case (create order, decrement stock) stays in the service; listeners handle reactions only.
+
+## Layer flow
+
+```
+Service (transaction: persist domain state)
+    ↓ after commit
+Event dispatched (OrderPlaced)
+    ↓
+Listener(s) (ClearCartOnOrderPlaced, …)
+```
+
+## Example
+
+```php
+// PlaceOrderService
+$order = DB::transaction(fn () => $this->orderRepository->createWithItems(...));
+
+event(new OrderPlaced($order));
+
+return $order;
+
+// ClearCartOnOrderPlaced
+public function handle(OrderPlaced $event): void
+{
+    $this->cart->clear();
+}
+```
+
+## v1 scope
+
+- **Implemented:** `OrderPlaced` → `ClearCartOnOrderPlaced`
+- **Deferred (TD-005):** order confirmation email, admin notification, queued listeners

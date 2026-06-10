@@ -21,6 +21,7 @@
 | TD-002 | Split CI into separate GitHub Actions jobs | After Phase 3 / submission polish |
 | TD-003 | `docs/PATTERNS.md` for live review | Before README / review |
 | TD-004 | Constructor injection in HTTP controllers | Phase 5 / submission polish |
+| TD-005 | Additional `OrderPlaced` listeners (email, queue) | Phase 5 / submission polish |
 
 ---
 
@@ -59,3 +60,18 @@ Not required by the assignment — DX improvement only.
 **Later (Phase 5):** refactor controllers that share a dependency across actions to **constructor injection** (`private readonly CheckoutService $checkout`), so deps are declared once per controller. Update `.cursor/rules/` if we standardize on constructor over method injection.
 
 Not a functional issue — consistency / readability only.
+
+---
+
+## TD-005 — Additional domain event listeners
+
+**Now:** `OrderPlaced` → `ClearCartOnOrderPlaced` (sync). Cart clear removed from `CheckoutService::place()`.
+
+**Later (Phase 5):**
+
+- `SendOrderConfirmation` listener (email to customer)
+- Admin notification on new order
+- Queue listeners where async is safe (`ShouldQueue`)
+- `OrderStatusChanged` event when admin updates status in Filament
+
+See `.cursor/rules/events.mdc` for dispatch and listener conventions.

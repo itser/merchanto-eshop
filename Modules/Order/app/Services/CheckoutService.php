@@ -72,8 +72,6 @@ class CheckoutService
 
         $order = $this->placeOrderService->place($customerName, $customerEmail, $items);
 
-        $this->cart->clear();
-
         return $order;
     }
 }
