@@ -39,6 +39,33 @@ Test DB: `merchanto_eshop_testing` (see `phpunit.xml`) — isolated from dev dat
 
 `make assets` = Filament publish + Vite build → `public/build/`. Re-run after frontend or Filament changes. Filament assets also publish on `composer install`.
 
+## Fresh install verification
+
+Run on a **clean clone** (or after `make down -v` + remove `vendor/`, `node_modules/`):
+
+```bash
+# 1. Setup (must finish without errors)
+cp .env.example .env && composer install && make up
+make artisan cmd="key:generate"
+make artisan cmd="migrate:fresh --seed"
+make npm cmd="install" && make assets
+
+# 2. Automated checks
+make test
+make duster
+make stan    # if cache lock error — see Tests & quality section
+```
+
+**Browser smoke test** (http://localhost:8080):
+
+- [ ] `/products` — list loads, **Add to cart** visible on in-stock items
+- [ ] Cart badge in header updates after add
+- [ ] `/checkout` — empty cart redirects to products; with items — form works
+- [ ] Place order → `/orders/{id}` shows snapshot data & status
+- [ ] `/admin` — login works; products, categories, **3 sample orders** visible
+
+If all pass, README setup is verified.
+
 ## Demo flow (evaluators)
 
 After `migrate:fresh --seed` you get categories, products, admin user, and **3 sample orders**.

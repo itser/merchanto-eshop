@@ -135,11 +135,11 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 
 - [x] Sample orders seeder (optional; categories/products/admin already seeded)
 - [x] Complete README: install, DB, assets, admin access, demo flow, architecture, test commands
-- [ ] Verify setup on a fresh environment
-- [ ] All Pest tests green
-- [ ] Duster clean
-- [ ] Larastan zero errors
-- [ ] CI green
+- [x] Verify setup on a fresh environment
+- [x] All Pest tests green
+- [x] Duster clean
+- [x] Larastan zero errors
+- [x] CI green
 - [ ] Tag `v1.0`
 
 ---
