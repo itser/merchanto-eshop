@@ -20,6 +20,7 @@
 | TD-001 | Money value object (`brick/money`) | After Phase 3 or if multi-currency |
 | TD-002 | Split CI into separate GitHub Actions jobs | After Phase 3 / submission polish |
 | TD-003 | `docs/PATTERNS.md` for live review | Before README / review |
+| TD-004 | Constructor injection in HTTP controllers | Phase 5 / submission polish |
 
 ---
 
@@ -48,3 +49,13 @@ Not required by the assignment — DX improvement only.
 **Now:** patterns live only in `.cursor/rules/`.
 
 **Later:** short `docs/PATTERNS.md` — Modular Monolith, Repository, Ports & Adapters (`ProductCatalogInterface`), DTO, State (`OrderStatus`). Link from README.
+
+---
+
+## TD-004 — Constructor injection in HTTP controllers
+
+**Now:** services are resolved via **method injection** in controller actions (e.g. `CheckoutService $checkout` in `index()` and `store()`). Matches current thin-controller style (`ProductController`, `CheckoutController`).
+
+**Later (Phase 5):** refactor controllers that share a dependency across actions to **constructor injection** (`private readonly CheckoutService $checkout`), so deps are declared once per controller. Update `.cursor/rules/` if we standardize on constructor over method injection.
+
+Not a functional issue — consistency / readability only.
