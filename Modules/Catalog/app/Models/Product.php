@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Catalog\Database\Factories\ProductFactory;
 
+/**
+ * @property int $id
+ * @property int $category_id
+ * @property string $name
+ * @property string $description
+ * @property numeric-string $price
+ * @property int $stock
+ */
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */

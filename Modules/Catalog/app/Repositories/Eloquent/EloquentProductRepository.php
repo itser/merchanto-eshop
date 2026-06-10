@@ -2,8 +2,8 @@
 
 namespace Modules\Catalog\Repositories\Eloquent;
 
-use App\Repositories\Eloquent\EloquentRepository;
 use App\Exceptions\Catalog\InsufficientStockException;
+use App\Repositories\Eloquent\EloquentRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Catalog\Models\Product;

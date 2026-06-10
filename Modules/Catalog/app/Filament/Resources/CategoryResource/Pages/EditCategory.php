@@ -5,6 +5,7 @@ namespace Modules\Catalog\Filament\Resources\CategoryResource\Pages;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Modules\Catalog\Filament\Resources\CategoryResource;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Services\CategoryManagementService;
@@ -37,6 +38,10 @@ class EditCategory extends EditRecord
      */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+        if (! $record instanceof Category) {
+            throw new InvalidArgumentException('Expected category record.');
+        }
+
         return $this->categoryManagement->update($record, $data);
     }
 }
