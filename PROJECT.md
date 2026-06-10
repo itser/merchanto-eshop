@@ -2,6 +2,7 @@
 
 > Implementation plan and decision log.
 > Rules and conventions: `.cursor/rules/`
+> Deferred improvements: [`TECH_DEBT.md`](TECH_DEBT.md)
 
 ## Decisions
 
