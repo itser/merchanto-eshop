@@ -1,0 +1,61 @@
+---
+description: Domain and functional exceptions — one class per failure type
+alwaysApply: true
+---
+
+# Exceptions
+
+## Rules
+
+- ❌ Do not use generic `\Exception`, `\RuntimeException`, or `\InvalidArgumentException` for **functional / domain failures** (insufficient stock, invalid order state, etc.).
+- ✅ Each distinct business failure gets its **own exception class**.
+- ✅ Name in **PascalCase** + `Exception` suffix: `InsufficientStockException`, `OrderAlreadyCancelledException`.
+- ✅ One class per file; class name matches filename.
+
+## Location
+
+| Scope | Path | Example |
+|---|---|---|
+| Cross-module (thrown via `app/Contracts/`) | `app/Exceptions/{Domain}/` | `app/Exceptions/Catalog/InsufficientStockException.php` |
+| Module-internal only | `Modules/{Module}/app/Exceptions/` | `Modules/Order/app/Exceptions/EmptyCartException.php` |
+
+Cross-module exceptions live in `app/` so consuming modules can catch them **without** importing the implementing module.
+
+## Implementation
+
+- Extend `\RuntimeException` (or a project base exception if introduced later).
+- Prefer **readonly constructor properties** for context (`productId`, `requestedQuantity`, etc.).
+- Document `@throws` on public service and contract methods that propagate the failure.
+- Tests assert the **specific exception class**, not `Exception::class`.
+
+## Examples
+
+```php
+// app/Exceptions/Catalog/InsufficientStockException.php
+class InsufficientStockException extends \RuntimeException
+{
+    public function __construct(
+        public readonly int $productId,
+        public readonly int $requestedQuantity,
+    ) {
+        parent::__construct("Insufficient stock for product [{$productId}].");
+    }
+}
+```
+
+```php
+// Contract
+/** @throws InsufficientStockException */
+public function decrementStock(int $productId, int $quantity): void;
+```
+
+```php
+// Test
+})->throws(InsufficientStockException::class);
+```
+
+## Do not
+
+- Do not reuse one exception class for unrelated failures.
+- Do not place cross-module exceptions inside `Modules/*/app/Exceptions/`.
+- Do not catch and swallow domain exceptions without a deliberate recovery path.

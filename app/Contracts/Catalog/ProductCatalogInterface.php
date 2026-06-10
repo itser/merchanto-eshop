@@ -3,6 +3,7 @@
 namespace App\Contracts\Catalog;
 
 use App\DataTransferObjects\Catalog\ProductData;
+use App\Exceptions\Catalog\InsufficientStockException;
 
 interface ProductCatalogInterface
 {
@@ -15,5 +16,8 @@ interface ProductCatalogInterface
 
     public function hasStock(int $productId, int $quantity): bool;
 
+    /**
+     * @throws InsufficientStockException
+     */
     public function decrementStock(int $productId, int $quantity): void;
 }

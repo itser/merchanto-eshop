@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Repositories\Contracts;
 
 use App\Repositories\Contracts\RepositoryInterface;
+use App\Exceptions\Catalog\InsufficientStockException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Catalog\Models\Product;
@@ -28,6 +29,9 @@ interface ProductRepositoryInterface extends RepositoryInterface
 
     public function hasStock(int $productId, int $quantity): bool;
 
+    /**
+     * @throws InsufficientStockException
+     */
     public function decrementStock(int $productId, int $quantity): void;
 
     /**

@@ -54,3 +54,7 @@ Order needs product data without a Catalog dependency:
 
 - Follow `repository-pattern.mdc`: Controller → Service → Repository → Model.
 - No direct model access from controllers or HTTP entry points.
+
+## Exceptions
+
+- Follow `exceptions.mdc`: one class per functional failure; cross-module exceptions in `app/Exceptions/{Domain}/`.

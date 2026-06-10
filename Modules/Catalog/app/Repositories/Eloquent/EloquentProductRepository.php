@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Repositories\Eloquent;
 
 use App\Repositories\Eloquent\EloquentRepository;
+use App\Exceptions\Catalog\InsufficientStockException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Catalog\Models\Product;
@@ -53,7 +54,7 @@ class EloquentProductRepository extends EloquentRepository implements ProductRep
             ->decrement('stock', $quantity);
 
         if ($affected === 0) {
-            throw new \RuntimeException("Insufficient stock for product [{$productId}].");
+            throw new InsufficientStockException($productId, $quantity);
         }
     }
 

@@ -2,6 +2,7 @@
 
 use App\Contracts\Catalog\ProductCatalogInterface;
 use App\DataTransferObjects\Catalog\ProductData;
+use App\Exceptions\Catalog\InsufficientStockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Catalog\Models\Product;
 
@@ -68,4 +69,4 @@ test('product catalog decrement fails when insufficient stock', function () {
     $product = Product::factory()->create(['stock' => 2]);
 
     app(ProductCatalogInterface::class)->decrementStock($product->id, 3);
-})->throws(Exception::class);
+})->throws(InsufficientStockException::class);
