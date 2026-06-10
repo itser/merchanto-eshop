@@ -63,6 +63,7 @@ Side effects after a successful business action — not core persistence inside 
 | Event | Dispatched from | Listener | Purpose |
 |-------|-----------------|---------|---------|
 | `OrderPlaced` | `PlaceOrderService` (after DB commit) | `ClearCartOnOrderPlaced` | Empty session cart |
+| `OrderStatusChanged` | `OrderManagementService` (after status update) | `LogOrderStatusChanged` | Placeholder for email / audit (TD-005) |
 
 Dispatch **after** `DB::transaction()` completes. See `.cursor/rules/events.mdc`.
 

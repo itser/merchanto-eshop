@@ -4,7 +4,9 @@ namespace Modules\Order\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Modules\Order\Events\OrderPlaced;
+use Modules\Order\Events\OrderStatusChanged;
 use Modules\Order\Listeners\ClearCartOnOrderPlaced;
+use Modules\Order\Listeners\LogOrderStatusChanged;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         OrderPlaced::class => [
             ClearCartOnOrderPlaced::class,
+        ],
+        OrderStatusChanged::class => [
+            LogOrderStatusChanged::class,
         ],
     ];
 
