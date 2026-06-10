@@ -1,147 +1,99 @@
 # Merchanto E-Shop
 
-Laravel 12 e-commerce application (technical assignment). Modular architecture with Livewire storefront and Filament admin panel.
+Modular Laravel 12 e-shop: Livewire storefront, Filament admin, PostgreSQL, Pest feature tests.
 
-## Requirements
+**Stack:** Laravel Sail · `nwidart/laravel-modules` (Catalog, Order) · Livewire · Filament · Vite · Duster · Larastan · GitHub Actions
 
-- Docker Desktop (or compatible runtime)
-- Composer (for initial `vendor/` install outside Sail, optional)
-
-## Quick start
+## Setup
 
 ```bash
 cp .env.example .env
-composer install          # publishes Filament JS/fonts via composer hook
+composer install
 make up
 make artisan cmd="key:generate"
-make migrate
-make artisan cmd="db:seed"
+make artisan cmd="migrate:fresh --seed"
 make npm cmd="install"
-make assets               # filament:assets + Vite build (admin theme)
-```
-
-Open:
-
-- Storefront: http://localhost:8080
-- Admin: http://localhost:8080/admin
-
-Default admin credentials (see `.env.example`):
-
-| Field    | Value                      |
-|----------|----------------------------|
-| Email    | `admin@merchanto-eshop.test` |
-| Password | `password`                 |
-
-Use `http://localhost:8080` consistently — do not mix with `127.0.0.1` (separate cookie origin).
-
-## Environment
-
-Key variables in `.env.example`:
-
-| Variable         | Local value              | Notes                                      |
-|------------------|--------------------------|--------------------------------------------|
-| `APP_URL`        | `http://localhost:8080`  | Must match the URL you open in the browser |
-| `APP_PORT`       | `8080`                   | Sail HTTP port                             |
-| `DB_HOST`        | `pgsql`                  | Sail service name                          |
-| `SESSION_DRIVER` | `database`               | Required for browser login (not `array`)   |
-
-## Make commands
-
-```bash
-make help          # list all commands
-make up / down     # start / stop Sail
-make migrate       # run migrations
-make assets        # publish Filament assets + build Vite bundle
-make npm-dev       # Vite dev server (hot reload)
-make test          # Pest feature tests
-make test-catalog  # Catalog module tests
-make test-order    # Order module tests
-make duster        # code style lint
-make stan          # Larastan static analysis
-make check         # test + pint + duster + stan
-```
-
-## Frontend assets
-
-Two separate asset pipelines:
-
-1. **Filament JS/fonts** — published to `public/js/filament/`, `public/fonts/filament/` via `php artisan filament:assets`. Runs automatically on `composer install` / `composer update` (composer hook). Not committed to git.
-2. **Vite bundle** (app CSS/JS + Filament theme) — built to `public/build/` via `npm run build` or `make build`. Not committed to git.
-
-After cloning or updating Filament, run:
-
-```bash
 make assets
 ```
 
-## Tests
+| URL | Purpose |
+|-----|---------|
+| http://localhost:8080 | Storefront |
+| http://localhost:8080/admin | Admin (Filament) |
 
-Tests use a separate PostgreSQL database (`merchanto_eshop_testing`), configured in `phpunit.xml`.
+**Admin:** `admin@merchanto-eshop.test` / `password` (from `.env.example`)
+
+Use `http://localhost:8080` only — not `127.0.0.1` (different session cookies).
+
+### Environment
+
+| Variable | Value | Note |
+|----------|-------|------|
+| `APP_URL` | `http://localhost:8080` | Must match browser URL |
+| `DB_HOST` | `pgsql` | Sail service name |
+| `SESSION_DRIVER` | `database` | Required for cart & admin |
+
+Test DB: `merchanto_eshop_testing` (see `phpunit.xml`) — isolated from dev data.
+
+### Assets
+
+`make assets` = Filament publish + Vite build → `public/build/`. Re-run after frontend or Filament changes. Filament assets also publish on `composer install`.
+
+## Demo flow (evaluators)
+
+After `migrate:fresh --seed` you get categories, products, admin user, and **3 sample orders**.
+
+1. **Browse** — http://localhost:8080/products  
+2. **Add to cart** — Livewire button; cart badge updates in header  
+3. **Checkout** — http://localhost:8080/checkout — name + email, place order  
+4. **Order view** — redirect to `/orders/{id}`; items shown from **snapshot** (not live catalog)  
+5. **Admin** — http://localhost:8080/admin — CRUD products/categories, list orders, change status: `pending → confirmed → shipped → delivered`
+
+**No public customer auth** — guest checkout only. Order list for customers is not in scope; admin sees all orders in Filament.
+
+## Storefront routes
+
+| Route | Description |
+|-------|-------------|
+| `/products` | Product catalog |
+| `/checkout` | Cart review + customer form |
+| `/orders/{order}` | Order confirmation & status |
+
+Cart is **session-only** (no DB table). Order is persisted on checkout submit; cart clears via `OrderPlaced` event.
+
+## Tests & quality
 
 ```bash
-make test
-make test-catalog
-make test-order
+make test              # all Pest tests (58+)
+make test-catalog      # Catalog module
+make test-order        # Order module
+make duster            # code style
+make stan              # Larastan (level ≥ 5)
+make check             # test + duster + stan
 ```
+
+If `make stan` fails on cache lock:  
+`./vendor/bin/sail exec laravel.test sh -c 'rm -rf /tmp/phpstan && php vendor/bin/phpstan analyse'`
 
 ## Architecture
 
-Modular monolith: two Laravel modules (**Catalog**, **Order**) via `nwidart/laravel-modules`. Shared contracts and DTOs live in `app/` so modules stay isolated.
-
-### Modules
-
-| Module  | Responsibility |
-|---------|----------------|
-| Catalog | Products, categories, public `/products`, Filament CRUD |
-| Order   | Orders, order items (snapshot), `PlaceOrderService`, Filament order admin |
-
-### Layers (within each module)
-
 ```
-Controller / Livewire / Filament
-        ↓
-    Service
-        ↓
-   Repository
-        ↓
-      Model
+Modules/Catalog          Modules/Order
+     │                         │
+     │   ProductCatalogInterface (app/Contracts)
+     └───────────┬─────────────┘
+                 ↓
+         DTOs & exceptions in app/
 ```
 
-Controllers and Filament pages call **services only** — not Eloquent models directly.
+**Layers (each module):** Controller / Livewire / Filament → Service → Repository → Model
 
-### Cross-module communication
+**Cross-module rule:** Order never imports `Modules\Catalog\*`. Catalog data at checkout/order time goes through `ProductCatalogInterface`; order line items store a **snapshot** (`product_name`, `product_price`, `quantity`) + `product_id` (no FK).
 
-Order must **not** import `Modules\Catalog\*`. It uses:
+**Patterns:** Form Requests for HTTP input · domain events for side effects (`OrderPlaced` → clear cart) · module routes in `Modules/*/routes/web.php`
 
-| Shared in `app/` | Purpose |
-|------------------|---------|
-| `Contracts/Catalog/ProductCatalogInterface` | Product lookup, stock check/decrement |
-| `DataTransferObjects/Catalog/ProductData` | Read product data |
-| `DataTransferObjects/Catalog/ProductSnapshot` | Line-item snapshot at order time |
-| `Exceptions/Catalog/InsufficientStockException` | Failed stock decrement |
-
-Implementation: `ProductCatalogService` (Catalog) → `ProductRepository`.
-
-Order placement: `PlaceOrderService` runs in a **DB transaction** — create order + items, decrement stock via contract.
-
-### Order items
-
-Each `order_items` row stores:
-
-- `product_id` — reference only (no FK to Catalog)
-- `product_name`, `product_price`, `quantity` — snapshot frozen at order time
-
-### Admin
-
-Single Filament panel at `/admin`. Resources registered from module service providers (`CatalogServiceProvider`, `OrderServiceProvider`).
-
-### Demo flow (current)
-
-1. Seed: `make artisan cmd="migrate:fresh --seed"` — categories, products, admin user
-2. Browse products: http://localhost:8080/products
-3. Admin: http://localhost:8080/admin — manage catalog and orders (status workflow)
-4. Cart/checkout (Livewire) — Phase 4
+Conventions: `.cursor/rules/` · plan: `PROJECT.md` · deferred work: `TECH_DEBT.md`
 
 ## CI
 
-GitHub Actions runs Pest, Duster, and Larastan on push/PR to `main`. See `.github/workflows/ci.yml`.
+GitHub Actions on push/PR to `main`: Pest → Duster → Larastan (`.github/workflows/ci.yml`).

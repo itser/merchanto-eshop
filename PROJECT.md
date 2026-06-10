@@ -134,7 +134,7 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 ### Phase 5 — Submission
 
 - [x] Sample orders seeder (optional; categories/products/admin already seeded)
-- [ ] Complete README: install, DB, assets, admin access, demo flow, architecture, test commands
+- [x] Complete README: install, DB, assets, admin access, demo flow, architecture, test commands
 - [ ] Verify setup on a fresh environment
 - [ ] All Pest tests green
 - [ ] Duster clean
