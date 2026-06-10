@@ -14,10 +14,12 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Catalog\Filament\Resources\ProductResource\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\ProductResource\Pages\EditProduct;
 use Modules\Catalog\Filament\Resources\ProductResource\Pages\ListProducts;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Repositories\Contracts\ProductRepositoryInterface;
 
 class ProductResource extends Resource
 {
@@ -26,6 +28,14 @@ class ProductResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    /**
+     * @return Builder<Product>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return app(ProductRepositoryInterface::class)->query();
+    }
 
     public static function form(Schema $schema): Schema
     {

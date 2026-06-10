@@ -3,13 +3,31 @@
 namespace Modules\Catalog\Repositories\Contracts;
 
 use App\Repositories\Contracts\RepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Catalog\Models\Product;
 
 interface ProductRepositoryInterface extends RepositoryInterface
 {
     /**
+     * @return Builder<Product>
+     */
+    public function query(): Builder;
+
+    /**
      * @return Collection<int, Product>
      */
     public function listForStorefront(): Collection;
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    public function create(array $attributes): Product;
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    public function update(Product $product, array $attributes): Product;
+
+    public function delete(Product $product): void;
 }
