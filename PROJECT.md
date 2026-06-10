@@ -92,14 +92,14 @@ Order must **not** import `Modules\Catalog\*` models, repositories, or services.
 - [x] Refactor `CategoryResource` / `ProductResource` → Service → Repository
 - [x] Remove scaffold `CatalogController` and unused module views/routes
 
-### Phase 2 — Contracts
+### Phase 2 — Contracts ✅
 
-- [ ] **TDD** `ProductCatalogContractTest` — resolve contract from container; DTO output, stock decrement
-- [ ] `ProductCatalogInterface` in `app/Contracts/Catalog/`
-- [ ] DTOs: readonly `ProductData`, `ProductSnapshot` in `app/DataTransferObjects/Catalog/`
-- [ ] Extend `ProductRepositoryInterface`: named methods (`findById`, `listAvailable`, `hasStock`, `decrementStock`)
-- [ ] `ProductCatalogService` implements interface; uses repository only (no direct model access)
-- [ ] Register `ProductCatalogInterface` → `ProductCatalogService` in `CatalogServiceProvider`
+- [x] **TDD** `ProductCatalogContractTest` — resolve contract from container; DTO output, stock decrement
+- [x] `ProductCatalogInterface` in `app/Contracts/Catalog/`
+- [x] DTOs: readonly `ProductData`, `ProductSnapshot` in `app/DataTransferObjects/Catalog/`
+- [x] Extend `ProductRepositoryInterface`: named methods (`findById`, `listAvailable`, `hasStock`, `decrementStock`)
+- [x] `ProductCatalogService` implements interface; uses repository only (no direct model access)
+- [x] Register `ProductCatalogInterface` → `ProductCatalogService` in `CatalogServiceProvider`
 
 ### Phase 3 — Order module (backend)
 

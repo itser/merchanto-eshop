@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Providers;
 
+use App\Contracts\Catalog\ProductCatalogInterface;
 use Filament\Panel;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Catalog\Filament\Resources\CategoryResource;
@@ -10,6 +11,7 @@ use Modules\Catalog\Repositories\Contracts\CategoryRepositoryInterface;
 use Modules\Catalog\Repositories\Contracts\ProductRepositoryInterface;
 use Modules\Catalog\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Catalog\Repositories\Eloquent\EloquentProductRepository;
+use Modules\Catalog\Services\ProductCatalogService;
 use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class CatalogServiceProvider extends ModuleServiceProvider
@@ -47,6 +49,7 @@ class CatalogServiceProvider extends ModuleServiceProvider
 
         $this->app->bind(CategoryRepositoryInterface::class, EloquentCategoryRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
+        $this->app->bind(ProductCatalogInterface::class, ProductCatalogService::class);
 
         Panel::configureUsing(function (Panel $panel): void {
             if ($panel->getId() !== 'admin') {
