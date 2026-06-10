@@ -122,7 +122,7 @@ Build with Repository → Service layers from day one (same pattern as Catalog).
 
 Livewire and session cart live in **Order module**; badge wired in root layout.
 
-- [ ] `CartService` — session-based cart (no DB table)
+- [x] `CartService` — session-based cart (no DB table)
 - [ ] Livewire: add to cart from `/products`
 - [ ] Livewire: cart badge in `resources/views/layouts/app.blade.php` header
 - [ ] Public routes in `Modules/Order/routes/web.php`: `/checkout`, `/orders/{order}`
