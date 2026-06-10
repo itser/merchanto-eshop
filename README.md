@@ -4,6 +4,14 @@ Modular Laravel 12 e-shop: Livewire storefront, Filament admin, PostgreSQL, Pest
 
 **Stack:** Laravel Sail · `nwidart/laravel-modules` (Catalog, Order) · Livewire · Filament · Vite · Duster · Larastan · GitHub Actions
 
+## Prerequisites
+
+- Docker Desktop (or Docker Engine + Compose v2)
+- PHP **8.3** and Composer (for initial `composer install` on the host)
+- GNU Make
+
+Node.js on the host is optional — `npm` runs inside Sail via `make npm`.
+
 ## Setup
 
 ```bash
