@@ -2,7 +2,7 @@ SAIL := ./vendor/bin/sail
 
 .DEFAULT_GOAL := help
 
-.PHONY: help \
+.PHONY: help setup \
 	up down restart ps shell logs \
 	artisan composer migrate fresh db-show \
 	test test-catalog test-order pest \
@@ -15,6 +15,15 @@ SAIL := ./vendor/bin/sail
 
 help: ## Show available commands
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
+
+setup: ## First-time setup after clone (host PHP 8.3 + Composer required)
+	@test -f .env || cp .env.example .env
+	composer install
+	$(MAKE) up
+	$(MAKE) artisan cmd="key:generate"
+	$(MAKE) artisan cmd="migrate:fresh --seed"
+	$(MAKE) npm cmd="install"
+	$(MAKE) assets
 
 up: ## Start Sail containers
 	$(SAIL) up -d

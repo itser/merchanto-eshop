@@ -9,10 +9,25 @@ Modular Laravel 12 e-shop: Livewire storefront, Filament admin, PostgreSQL, Pest
 - Docker Desktop (or Docker Engine + Compose v2)
 - PHP **8.3** and Composer (for initial `composer install` on the host)
 - GNU Make
+- Ports **8080** (app) and **5432** (PostgreSQL forward) available on the host
 
 Node.js on the host is optional — `npm` runs inside Sail via `make npm`.
 
+### Check ports are free
+
+App port: `APP_PORT` in `.env` (default **8080** from `.env.example`). PostgreSQL host port: **5432** (`FORWARD_DB_PORT` in `.env`, or default in `compose.yaml`).
+
+```bash
+lsof -i :8080 -i :5432
+```
+
+No output means both ports are free. If a process is listed, stop the other Sail project (`make down`) or change the ports in `.env` before `make up`.
+
 ## Setup
+
+Fresh clone only — `make setup` runs `migrate:fresh --seed` and wipes the dev database.
+
+### Step by step
 
 ```bash
 cp .env.example .env
@@ -22,6 +37,12 @@ make artisan cmd="key:generate"
 make artisan cmd="migrate:fresh --seed"
 make npm cmd="install"
 make assets
+```
+
+### Shortcut
+
+```bash
+make setup
 ```
 
 | URL | Purpose |
@@ -53,10 +74,7 @@ Run on a **clean clone** (or after `make down -v` + remove `vendor/`, `node_modu
 
 ```bash
 # 1. Setup (must finish without errors)
-cp .env.example .env && composer install && make up
-make artisan cmd="key:generate"
-make artisan cmd="migrate:fresh --seed"
-make npm cmd="install" && make assets
+make setup
 
 # 2. Automated checks
 make test

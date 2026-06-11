@@ -147,6 +147,7 @@ Livewire and session cart live in **Order module**; badge wired in root layout.
 ## Commands
 
 ```bash
+make setup                           # first-time setup after clone
 make up                              # start Sail
 make migrate                         # run migrations
 make artisan cmd="migrate:fresh --seed"  # reset DB + seed demo data
